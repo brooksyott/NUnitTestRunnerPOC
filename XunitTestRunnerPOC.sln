@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Component01", "Component01\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestRunnerCLI", "TestRunnerCLI\TestRunnerCLI.csproj", "{3103D1BE-0C11-44FA-ACDB-4A627E26F325}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestRunner", "TestRunner\TestRunner.csproj", "{B2116F8C-4052-40BA-A53E-5DF759E77A0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{3103D1BE-0C11-44FA-ACDB-4A627E26F325}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3103D1BE-0C11-44FA-ACDB-4A627E26F325}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3103D1BE-0C11-44FA-ACDB-4A627E26F325}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2116F8C-4052-40BA-A53E-5DF759E77A0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2116F8C-4052-40BA-A53E-5DF759E77A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2116F8C-4052-40BA-A53E-5DF759E77A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2116F8C-4052-40BA-A53E-5DF759E77A0F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

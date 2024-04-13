@@ -8,7 +8,7 @@ public class Component01Tests
 {
     // Test method marked for the sanity test suite
     // [Test, Category("Sanity")]
-    [Test(Description = "Test ID: Dave-001 - Adding two positive numbers")]
+    [Test(Description = "Test ID: Dave-001 - Adding two positive numbers"), Category("Regression")]
     [Property("TestID", "Dave-001")]
     public void TestMethod1()
     {
@@ -18,7 +18,7 @@ public class Component01Tests
     }
 
     // Another test method marked for the sanity test suite
-    [Test(Description = "Test ID is not known"), Category("Sanity")]
+    [Test(Description = "Test ID is not known"), Category("Sanity"), Category("Regression")]
     public void TestMethod2()
     {
         ClassicAssert.AreEqual(2, 2);  // Example assertion

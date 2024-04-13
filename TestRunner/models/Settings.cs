@@ -1,12 +1,13 @@
+namespace TestRunner;
 using System.Xml.Serialization;
 
-public class Properties
+public class Settings
 {
-    [XmlElement("property")]
-    public List<Property> PropertyList { get; set; }
+    [XmlElement("setting")]
+    public List<Setting> SettingList { get; set; }
 }
 
-public class Property
+public class Setting
 {
     [XmlAttribute("name")]
     public string Name { get; set; }

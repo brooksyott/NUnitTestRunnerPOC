@@ -1,6 +1,5 @@
-using System;
-using System.IO;
-using System.Text.Json.Serialization;
+namespace TestRunner;
+
 using System.Xml.Serialization;
 using NUnit.Engine;
 

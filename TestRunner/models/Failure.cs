@@ -1,3 +1,4 @@
+namespace TestRunner;
 using System.Xml.Serialization;
 
 public class Failure
