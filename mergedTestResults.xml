@@ -1,0 +1,13 @@
+<test-run>
+  <test-run id="0" name="Component01.dll.dll" fullname="C:\Repos\Personal\XunitTestRunnerPOC\Component01\bin\Debug\net8.0\Component01.dll.dll" runstate="Runnable" testcasecount="0" result="Failed" label="Invalid" total="0" passed="0" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.17.0.0" clr-version="8.0.0" start-time="2024-04-12 20:53:59Z" end-time="2024-04-12 20:53:59Z" duration="0.142444">
+    <command-line><![CDATA[C:\Repos\Personal\XunitTestRunnerPOC\TestRunnerCLI\bin\Debug\net8.0\TestRunnerCLI.dll]]></command-line>
+    <test-suite type="Assembly" id="0-1" name="Component01.dll.dll" fullname="C:\Repos\Personal\XunitTestRunnerPOC\Component01\bin\Debug\net8.0\Component01.dll.dll" testcasecount="0" runstate="NotRunnable" result="Failed" label="Invalid">
+      <properties>
+        <property name="_SKIPREASON" value="File not found: C:\Repos\Personal\XunitTestRunnerPOC\Component01\bin\Debug\net8.0\Component01.dll.dll" />
+      </properties>
+      <reason>
+        <message>File not found: C:\Repos\Personal\XunitTestRunnerPOC\Component01\bin\Debug\net8.0\Component01.dll.dll</message>
+      </reason>
+    </test-suite>
+  </test-run>
+</test-run>

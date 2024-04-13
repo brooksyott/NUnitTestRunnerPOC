@@ -1,0 +1,117 @@
+<test-run-root>
+  <test-run id="0" runstate="Runnable" testcasecount="9" result="Failed" total="9" passed="8" failed="1" warnings="0" inconclusive="0" skipped="0" asserts="9" engine-version="3.17.0.0" clr-version="8.0.0" start-time="2024-04-13 14:20:23Z" end-time="2024-04-13 14:20:23Z" duration="0.035111">
+    <command-line><![CDATA[C:\Repos\Personal\XunitTestRunnerPOC\TestRunnerCLI\bin\Debug\net8.0\TestRunnerCLI.dll]]></command-line>
+    <test-suite type="Assembly" id="1-1005" name="Component01.dll" fullname="C:\Repos\Personal\XunitTestRunnerPOC\Component01\bin\Debug\net8.0\Component01.dll" runstate="Runnable" testcasecount="4" result="Passed" start-time="2024-04-13T14:20:23.3010026Z" end-time="2024-04-13T14:20:23.3106770Z" duration="0.009662" total="4" passed="4" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="4">
+      <environment framework-version="4.0.1.0" clr-version="8.0.0" os-version="Microsoft Windows 10.0.22631" platform="Win32NT" cwd="C:\Repos\Personal\XunitTestRunnerPOC\TestRunnerCLI" machine-name="LT-DBROOKS-XPS" user="dave.brooks" user-domain="JSITELECOM" culture="en-US" uiculture="en-US" os-architecture="x64" />
+      <settings>
+        <setting name="NumberOfTestWorkers" value="20" />
+      </settings>
+      <properties>
+        <property name="_PID" value="48228" />
+        <property name="_APPDOMAIN" value="TestRunnerCLI" />
+      </properties>
+      <test-suite type="TestSuite" id="1-1006" name="Component01" fullname="Component01" runstate="Runnable" testcasecount="4" result="Passed" start-time="2024-04-13T14:20:23.3028586Z" end-time="2024-04-13T14:20:23.3106729Z" duration="0.007814" total="4" passed="4" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="4">
+        <test-suite type="TestFixture" id="1-1000" name="Component01Tests" fullname="Component01.Component01Tests" classname="Component01.Component01Tests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2024-04-13T14:20:23.3033742Z" end-time="2024-04-13T14:20:23.3105612Z" duration="0.007187" total="4" passed="4" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="4">
+          <test-case id="1-1001" name="TestMethod1" fullname="Component01.Component01Tests.TestMethod1" methodname="TestMethod1" classname="Component01.Component01Tests" runstate="Runnable" seed="2039966569" result="Passed" start-time="2024-04-13T14:20:23.3043940Z" end-time="2024-04-13T14:20:23.3061801Z" duration="0.001808" asserts="1">
+            <properties>
+              <property name="Description" value="Test ID: Dave-001 - Adding two positive numbers" />
+              <property name="TestID" value="Dave-001" />
+            </properties>
+            <output><![CDATA[TestMethod1
+]]></output>
+          </test-case>
+          <test-case id="1-1002" name="TestMethod2" fullname="Component01.Component01Tests.TestMethod2" methodname="TestMethod2" classname="Component01.Component01Tests" runstate="Runnable" seed="57072496" result="Passed" start-time="2024-04-13T14:20:23.3066543Z" end-time="2024-04-13T14:20:23.3096892Z" duration="0.003035" asserts="1">
+            <properties>
+              <property name="Description" value="Test ID is not known" />
+              <property name="Category" value="Sanity" />
+            </properties>
+          </test-case>
+          <test-case id="1-1003" name="TestMethod3" fullname="Component01.Component01Tests.TestMethod3" methodname="TestMethod3" classname="Component01.Component01Tests" runstate="Runnable" seed="367980375" result="Passed" start-time="2024-04-13T14:20:23.3097195Z" end-time="2024-04-13T14:20:23.3099615Z" duration="0.000242" asserts="1">
+            <properties>
+              <property name="Category" value="Regression" />
+            </properties>
+          </test-case>
+          <test-case id="1-1004" name="TestMethod4" fullname="Component01.Component01Tests.TestMethod4" methodname="TestMethod4" classname="Component01.Component01Tests" runstate="Runnable" seed="1303201129" result="Passed" start-time="2024-04-13T14:20:23.3099739Z" end-time="2024-04-13T14:20:23.3101818Z" duration="0.000208" asserts="1">
+            <properties>
+              <property name="Category" value="Regression" />
+              <property name="Category" value="Sanity" />
+            </properties>
+          </test-case>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="2-1014" name="Component02.dll" fullname="C:\Repos\Personal\XunitTestRunnerPOC\Component02\bin\Debug\net8.0\Component02.dll" runstate="Runnable" testcasecount="5" result="Failed" site="Child" start-time="2024-04-13T14:20:23.3120882Z" end-time="2024-04-13T14:20:23.3287847Z" duration="0.016696" total="5" passed="4" failed="1" warnings="0" inconclusive="0" skipped="0" asserts="5">
+      <environment framework-version="4.0.1.0" clr-version="8.0.0" os-version="Microsoft Windows 10.0.22631" platform="Win32NT" cwd="C:\Repos\Personal\XunitTestRunnerPOC\TestRunnerCLI" machine-name="LT-DBROOKS-XPS" user="dave.brooks" user-domain="JSITELECOM" culture="en-US" uiculture="en-US" os-architecture="x64" />
+      <settings>
+        <setting name="NumberOfTestWorkers" value="20" />
+      </settings>
+      <properties>
+        <property name="_PID" value="48228" />
+        <property name="_APPDOMAIN" value="TestRunnerCLI" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="2-1015" name="Component01" fullname="Component01" runstate="Runnable" testcasecount="5" result="Failed" site="Child" start-time="2024-04-13T14:20:23.3121179Z" end-time="2024-04-13T14:20:23.3287828Z" duration="0.016665" total="5" passed="4" failed="1" warnings="0" inconclusive="0" skipped="0" asserts="5">
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestFixture" id="2-1007" name="Component02Tests" fullname="Component01.Component02Tests" classname="Component01.Component02Tests" runstate="Runnable" testcasecount="5" result="Failed" site="Child" start-time="2024-04-13T14:20:23.3121325Z" end-time="2024-04-13T14:20:23.3287804Z" duration="0.016648" total="5" passed="4" failed="1" warnings="0" inconclusive="0" skipped="0" asserts="5">
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="ParameterizedMethod" id="2-1010" name="TestMethod1" fullname="Component01.Component02Tests.TestMethod1" classname="Component01.Component02Tests" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2024-04-13T14:20:23.3123241Z" end-time="2024-04-13T14:20:23.3285837Z" duration="0.016259" total="2" passed="1" failed="1" warnings="0" inconclusive="0" skipped="0" asserts="2">
+            <properties>
+              <property name="Category" value="Sanity" />
+              <property name="Category" value="Regression" />
+            </properties>
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-case id="2-1008" name="TestMethod1(1,1,2)" fullname="Component01.Component02Tests.TestMethod1(1,1,2)" methodname="TestMethod1" classname="Component01.Component02Tests" runstate="Runnable" seed="1965834275" result="Passed" start-time="2024-04-13T14:20:23.3123536Z" end-time="2024-04-13T14:20:23.3124469Z" duration="0.000093" asserts="1" />
+            <test-case id="2-1009" name="TestMethod1(1,2,2)" fullname="Component01.Component02Tests.TestMethod1(1,2,2)" methodname="TestMethod1" classname="Component01.Component02Tests" runstate="Runnable" seed="1780178400" result="Failed" start-time="2024-04-13T14:20:23.3124618Z" end-time="2024-04-13T14:20:23.3285185Z" duration="0.016057" asserts="1">
+              <failure>
+                <message><![CDATA[  Assert.That(actual, Is.EqualTo(expected))
+  Expected: 2
+  But was:  3
+]]></message>
+                <stack-trace><![CDATA[   at NUnit.Framework.Legacy.ClassicAssert.AreEqual(Object expected, Object actual)
+   at Component01.Component02Tests.TestMethod1(Int32 a, Int32 b, Int32 expectedResult) in C:\Repos\Personal\XunitTestRunnerPOC\Component02\Component02-Tests.cs:line 15
+   at InvokeStub_Component02Tests.TestMethod1(Object, Span`1)
+]]></stack-trace>
+              </failure>
+              <assertions>
+                <assertion result="Failed">
+                  <message><![CDATA[  Assert.That(actual, Is.EqualTo(expected))
+  Expected: 2
+  But was:  3
+]]></message>
+                  <stack-trace><![CDATA[   at NUnit.Framework.Legacy.ClassicAssert.AreEqual(Object expected, Object actual)
+   at Component01.Component02Tests.TestMethod1(Int32 a, Int32 b, Int32 expectedResult) in C:\Repos\Personal\XunitTestRunnerPOC\Component02\Component02-Tests.cs:line 15
+   at InvokeStub_Component02Tests.TestMethod1(Object, Span`1)
+]]></stack-trace>
+                </assertion>
+              </assertions>
+            </test-case>
+          </test-suite>
+          <test-case id="2-1011" name="TestMethod2" fullname="Component01.Component02Tests.TestMethod2" methodname="TestMethod2" classname="Component01.Component02Tests" runstate="Runnable" seed="198136600" result="Passed" start-time="2024-04-13T14:20:23.3285968Z" end-time="2024-04-13T14:20:23.3286578Z" duration="0.000061" asserts="1">
+            <properties>
+              <property name="Category" value="Sanity" />
+            </properties>
+          </test-case>
+          <test-case id="2-1012" name="TestMethod3" fullname="Component01.Component02Tests.TestMethod3" methodname="TestMethod3" classname="Component01.Component02Tests" runstate="Runnable" seed="1842409298" result="Passed" start-time="2024-04-13T14:20:23.3286606Z" end-time="2024-04-13T14:20:23.3287182Z" duration="0.000058" asserts="1">
+            <properties>
+              <property name="Category" value="Regression" />
+            </properties>
+          </test-case>
+          <test-case id="2-1013" name="TestMethod4" fullname="Component01.Component02Tests.TestMethod4" methodname="TestMethod4" classname="Component01.Component02Tests" runstate="Runnable" seed="2041626094" result="Passed" start-time="2024-04-13T14:20:23.3287237Z" end-time="2024-04-13T14:20:23.3287725Z" duration="0.000049" asserts="1">
+            <properties>
+              <property name="Category" value="Regression" />
+              <property name="Category" value="Sanity" />
+            </properties>
+          </test-case>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-run>
+</test-run-root>
