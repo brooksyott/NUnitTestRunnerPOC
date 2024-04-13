@@ -193,12 +193,12 @@ public class NUnitTestsRunner
         XmlNode importedNode = TestResultsXML.ImportNode(result, true);
         masterNode.AppendChild(importedNode);
 
-        PrintResults();
+        PrintResults(category, true);
 
         return true;
     }
 
-    private void PrintResults(string category = "", Boolean detailed = true)
+    private void PrintResults(string category = "", Boolean detailed = false)
     {
         TestRunRoot tr = this.DeserializeRunResults();
         if (category == "")
@@ -244,58 +244,6 @@ public class NUnitTestsRunner
         }
     }
 
-    private void PrintTestSuites2(TestSuite testSuite)
-    {
-
-
-        if (testSuite.Type == "TestFixture")
-        {
-            Console.WriteLine("\tTestSuite: {0}, Result: {1}, Passed: {2}, Failed: {3}, Skipped: {4}, Inconclusive: {5}", testSuite.Name, testSuite.Result, testSuite.Passed, testSuite.Failed, testSuite.Skipped, testSuite.Inconclusive);
-
-            if (testSuite.ChildSuites.Count > 0)
-            {
-                foreach (var suite in testSuite.ChildSuites)
-                {
-                    PrintTestSuites(suite);
-                }
-            }
-
-            foreach (var testcase in testSuite.TestCases)
-            {
-                var (testCaseId, description) = GetTestCaseInformation(testcase);
-                Console.WriteLine("\t\tTestCase: {0}, Id: {1}, Custom Id: {2}, Description: {3},  Result: {4}", testcase.MethodName, testcase.Id, testCaseId, description, testcase.Result);
-            }
-        }
-        else
-
-        if (testSuite.Type == "ParameterizedMethod")
-        {
-            if (testSuite.ChildSuites.Count > 0)
-            {
-                foreach (var suite in testSuite.ChildSuites)
-                {
-                    PrintTestSuites(suite);
-                }
-            }
-
-            foreach (var testcase in testSuite.TestCases)
-            {
-                var (testCaseId, description) = GetTestCaseInformation(testcase);
-                Console.WriteLine("\t\tTestCase: {0}, Id: {1}, Custom Id: {2}, Description: {3},  Result: {4}", testcase.MethodName, testcase.Id, testCaseId, description, testcase.Result);
-            }
-        }
-        else
-        {
-            if (testSuite.ChildSuites.Count > 0)
-            {
-                foreach (var suite in testSuite.ChildSuites)
-                {
-                    PrintTestSuites(suite);
-                }
-            }
-        }
-
-    }
 
     private (string, string) GetTestCaseInformation(TestCase testcase)
     {

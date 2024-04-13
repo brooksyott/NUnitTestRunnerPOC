@@ -13,7 +13,7 @@ public class Program
         };
 
         runner.Load(TestComponents);
-        Boolean success = runner.Execute();
+        Boolean success = runner.Execute("Sanity");
         runner.TestResultsXML.Save("testResults.xml");
 
     }
