@@ -12,6 +12,9 @@ using System.Xml.Linq;
 using System.Dynamic;
 using Newtonsoft.Json;
 using NUnit;
+using NUnit.Framework.Interfaces;
+using NUnit.Framework.Api;
+using System.Data.Common;
 
 class PluginLoadContext : AssemblyLoadContext
 {
@@ -79,7 +82,9 @@ public class NUnitTestsRunner
     public TestFilter Filter;
     public ITestRunner Runner;
 
-    public XmlDocument TestResultsXML = new XmlDocument();
+    public XmlDocument TestResultsXML { get; private set; }
+    public XmlNode TestsXML { get; private set; }
+
     public TestRunRoot TestResults;
 
     public NUnitTestsRunner()
@@ -88,12 +93,6 @@ public class NUnitTestsRunner
     }
 
     public Boolean Load(IEnumerable<string> assemblyPaths, string category = "")
-    {
-
-        return true;
-    }
-
-    public Boolean RunTests(IEnumerable<string> assemblyPaths, string category = "")
     {
         List<string> assemblyPathList = new List<string>();
 
@@ -114,21 +113,77 @@ public class NUnitTestsRunner
             return false;
         }
 
-        // Initialize the master document root element
-        TestResultsXML = new XmlDocument();
-        XmlNode masterNode = TestResultsXML.CreateElement("test-run-root");
-        TestResultsXML.AppendChild(masterNode);
-
         ITestEngine engine = TestEngineActivator.CreateInstance();
         TestPackage package = new TestPackage(assemblyPathList);
         package.Settings.Add(EnginePackageSettings.InternalTraceLevel, "Off");
 
         Runner = engine.GetRunner(package);
-        Runner.Load();
-        XmlNode explored = Runner.Explore(TestFilter.Empty);
-        Console.WriteLine("*********************************************************************************");
-        Console.WriteLine(explored.OuterXml);
-        Console.WriteLine("*********************************************************************************");
+        // Runner.Load();
+
+        return true;
+    }
+
+    public TestRunRoot DeserializeRunResults()
+    {
+        try
+        {
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(TestResultsXML.OuterXml)))
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(TestRunRoot), new XmlRootAttribute("test-run-root"));
+                return (TestRunRoot)xs.Deserialize(stream);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            return null;
+        }
+    }
+
+    public TestRunRoot DeserializeRun()
+    {
+        TestsXML = Runner.Explore(TestFilter.Empty);
+
+        try
+        {
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(TestsXML.OuterXml)))
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(TestRunRoot), new XmlRootAttribute("test-run-root"));
+                return (TestRunRoot)xs.Deserialize(stream);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            return null;
+        }
+    }
+
+    public async Task<Boolean> ExecuteAsync(string category = "")
+    {
+        // Initialize the master document root element
+        TestResultsXML = new XmlDocument();
+        XmlNode masterNode = TestResultsXML.CreateElement("test-run-root");
+        TestResultsXML.AppendChild(masterNode);
+
+        // Build the filter
+        FilterBuilder filterBuilder = new FilterBuilder(category);
+        Filter = filterBuilder.Build();
+
+        var testrun = await Task<ITestRun>.Factory.StartNew(() => Runner.RunAsync(new MyEventListener(), Filter));
+        var result = testrun.Result;
+        XmlNode importedNode = TestResultsXML.ImportNode(result, true);
+        masterNode.AppendChild(importedNode);
+
+        return true;
+    }
+
+    public Boolean Execute(string category = "")
+    {
+        // Initialize the master document root element
+        TestResultsXML = new XmlDocument();
+        XmlNode masterNode = TestResultsXML.CreateElement("test-run-root");
+        TestResultsXML.AppendChild(masterNode);
 
         // Build the filter
         FilterBuilder filterBuilder = new FilterBuilder(category);
@@ -138,32 +193,136 @@ public class NUnitTestsRunner
         XmlNode importedNode = TestResultsXML.ImportNode(result, true);
         masterNode.AppendChild(importedNode);
 
-
-        using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(TestResultsXML.OuterXml)))
-        {
-            Console.WriteLine("Deserializing");
-            // XmlSerializer serializer = new XmlSerializer(typeof(TestRunRoot),"");
-            // tr = (TestRunRoot)serializer.Deserialize(stream);
-
-
-            XmlSerializer xs = new XmlSerializer(typeof(TestRunRoot), new XmlRootAttribute("test-run-root"));
-            TestResults = (TestRunRoot)xs.Deserialize(stream);
-            // dynamic dtr = xs.Deserialize(stream);
-        }
+        PrintResults();
 
         return true;
     }
 
-    public TestRunRoot ToTestRunRoot(XmlDocument document)
+    private void PrintResults(string category = "", Boolean detailed = true)
     {
-        using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(document.OuterXml)))
+        TestRunRoot tr = this.DeserializeRunResults();
+        if (category == "")
         {
-            XmlSerializer xs = new XmlSerializer(typeof(TestRunRoot), new XmlRootAttribute("test-run-root"));
-            return (TestRunRoot)xs.Deserialize(stream);
+            category = "All";
+        }
+
+        Console.WriteLine("Category: {5}, Test Result: {0}, Passed: {1}, Failed: {2}, Skipped: {3}, Inconclusive: {4}", tr.TestRun.Result, tr.TestRun.Passed, tr.TestRun.Failed, tr.TestRun.Skipped, tr.TestRun.Inconclusive, category);
+
+        if (detailed)
+        {
+            foreach (var testSuite in tr.TestRun.TestSuites)
+            {
+                PrintTestSuites(testSuite);
+            }
         }
     }
 
+    private void PrintTestSuites(TestSuite testSuite)
+    {
 
+        if (testSuite.Type == "TestFixture")
+        {
+            Console.WriteLine("\tTestSuite: {0}, Result: {1}, Passed: {2}, Failed: {3}, Skipped: {4}, Inconclusive: {5}", testSuite.Name, testSuite.Result, testSuite.Passed, testSuite.Failed, testSuite.Skipped, testSuite.Inconclusive);
+        }
+
+
+        if (testSuite.TestCases.Count > 0)
+        {
+            foreach (var testcase in testSuite.TestCases)
+            {
+                var (testCaseId, description) = GetTestCaseInformation(testcase);
+                Console.WriteLine("\t\tTestCase: {0}, Id: {1}, Custom Id: {2}, Description: {3},  Result: {4}", testcase.MethodName, testcase.Id, testCaseId, description, testcase.Result);
+            }
+        }
+
+        if (testSuite.ChildSuites.Count > 0)
+        {
+            foreach (var suite in testSuite.ChildSuites)
+            {
+                PrintTestSuites(suite);
+            }
+        }
+    }
+
+    private void PrintTestSuites2(TestSuite testSuite)
+    {
+
+
+        if (testSuite.Type == "TestFixture")
+        {
+            Console.WriteLine("\tTestSuite: {0}, Result: {1}, Passed: {2}, Failed: {3}, Skipped: {4}, Inconclusive: {5}", testSuite.Name, testSuite.Result, testSuite.Passed, testSuite.Failed, testSuite.Skipped, testSuite.Inconclusive);
+
+            if (testSuite.ChildSuites.Count > 0)
+            {
+                foreach (var suite in testSuite.ChildSuites)
+                {
+                    PrintTestSuites(suite);
+                }
+            }
+
+            foreach (var testcase in testSuite.TestCases)
+            {
+                var (testCaseId, description) = GetTestCaseInformation(testcase);
+                Console.WriteLine("\t\tTestCase: {0}, Id: {1}, Custom Id: {2}, Description: {3},  Result: {4}", testcase.MethodName, testcase.Id, testCaseId, description, testcase.Result);
+            }
+        }
+        else
+
+        if (testSuite.Type == "ParameterizedMethod")
+        {
+            if (testSuite.ChildSuites.Count > 0)
+            {
+                foreach (var suite in testSuite.ChildSuites)
+                {
+                    PrintTestSuites(suite);
+                }
+            }
+
+            foreach (var testcase in testSuite.TestCases)
+            {
+                var (testCaseId, description) = GetTestCaseInformation(testcase);
+                Console.WriteLine("\t\tTestCase: {0}, Id: {1}, Custom Id: {2}, Description: {3},  Result: {4}", testcase.MethodName, testcase.Id, testCaseId, description, testcase.Result);
+            }
+        }
+        else
+        {
+            if (testSuite.ChildSuites.Count > 0)
+            {
+                foreach (var suite in testSuite.ChildSuites)
+                {
+                    PrintTestSuites(suite);
+                }
+            }
+        }
+
+    }
+
+    private (string, string) GetTestCaseInformation(TestCase testcase)
+    {
+        string description = "";
+        string testCaseId = "";
+
+        if (testcase?.Properties?.PropertyList == null)
+        {
+            return (testCaseId, description);
+        }
+
+        foreach (var property in testcase.Properties.PropertyList)
+        {
+            switch (property.Name)
+            {
+                case "Description":
+                    description = property.Value;
+                    break;
+                case "TestID":
+                    testCaseId = property.Value;
+                    break;
+            }
+        }
+
+
+        return (testCaseId, description);
+    }
 
     // public XmlDocument RunTest(string assemblyPath)
     // {
