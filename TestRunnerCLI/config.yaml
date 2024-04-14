@@ -1,38 +1,38 @@
 ---
-components:
+testLibraries:
 - name: Component-01
   library: "../Component01/bin/Debug/net8.0/Component01.dll"
 - name: Component-02
   library: "../Component02/bin/Debug/net8.0/Component02.dll"
 testSuites:
   pullRequest:
-  - component: Component-01
+  - testLibrary: Component-01
     testSets:
-    - component: Component-01
+    - testLibrary: Component-01
       testSet: sanity
-    - component: Component-02
+    - testLibrary: Component-02
       testSet: sanity
-  - component: Component-02
+  - testLibrary: Component-02
     testSets:
-    - component: Component-02
+    - testLibrary: Component-02
       testSet: regression
   nightly:
-  - component: Component-01
+  - testLibrary: Component-01
     testSets:
-    - component: Component-01
+    - testLibrary: Component-01
       testSet: regression
-  - component: Component-02
+  - testLibrary: Component-02
     testSets:
-    - component: Component-02
+    - testLibrary: Component-02
       testSet: regression
   weekend:
-  - component: Component-01
+  - testLibrary: Component-01
     testSets:
-    - component: Component-01
+    - testLibrary: Component-01
       testSet: performance
-  - component: Component-02
+  - testLibrary: Component-02
     testSets:
-    - component: Component-02
+    - testLibrary: Component-02
       testSet: performance
 labConfig:
   name: DevCluster01

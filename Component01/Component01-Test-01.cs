@@ -4,15 +4,18 @@ using System.Reflection.Metadata.Ecma335;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
+using TestRunner.Framework;
+
+
 
 [TestFixture(Description = "Component01 Test Class 01")]
-[Property("ComponentTest", "Component-01-TestSuite-01")]
+[Property(TestFixture.Name, "Component-01-TestSuite-01")]
 public class Component01Tests01
 {
     // Test method marked for the sanity test suite
     // [Test, Category("Sanity")]
-    [Test(Description = "Test ID: Dave-001 - Adding two positive numbers"), Category("Regression")]
-    [Property("TestID", "Dave-001")]
+    [Test(Description = "Test ID: Dave-001 - Adding two positive numbers"), Category(TestCategories.Regression)]
+    [Property(TestCaseProperties.TestID, "Dave-001")]
     public void TestMethod1()
     {
         ClassicAssert.IsTrue(1 == 1);  // Example assertion
@@ -21,7 +24,7 @@ public class Component01Tests01
     }
 
     // Another test method marked for the sanity test suite
-    [Test(Description = "Test ID is not known"), Category("Sanity"), Category("Regression")]
+    [Test(Description = "Test ID is not known"), Category(TestCategories.Sanity), Category(TestCategories.Regression)]
     public void TestMethod2()
     {
         ClassicAssert.AreEqual(2, 2);  // Example assertion
@@ -38,7 +41,7 @@ public class Component01Tests01
     }
 
     // Another test method marked for both regression and sanity test suites
-    [Test, Category("Regression"), Category("Sanity")]
+    [Test, Category(TestCategories.Regression), Category(TestCategories.Sanity)]
     public void TestMethod4()
     {
         Assert.That(new object(), !Is.Null);  // Example assertion

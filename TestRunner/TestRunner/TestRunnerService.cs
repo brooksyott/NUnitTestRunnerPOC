@@ -17,7 +17,7 @@ public partial class TestcaseRunnerService
         _runner = new NUnitTestsRunner();
     }
 
-    public void Load(IEnumerable<Component> components)
+    public void Load(IEnumerable<TestLibrary> components)
     {
         List<String> assemblyPaths = new List<String>();
         foreach (var component in components)

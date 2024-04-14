@@ -5,7 +5,7 @@
       <setting name="NumberOfTestWorkers" value="32" />
     </settings>
     <properties>
-      <property name="_PID" value="1358100" />
+      <property name="_PID" value="1445327" />
       <property name="_APPDOMAIN" value="TestRunnerCLI" />
     </properties>
     <test-suite type="TestSuite" id="1-1011" name="Component01" fullname="Component01" runstate="Runnable" testcasecount="8">
@@ -14,22 +14,22 @@
           <property name="Description" value="Component01 Test Class 01" />
           <property name="ComponentTest" value="Component-01-TestSuite-01" />
         </properties>
-        <test-case id="1-1001" name="TestMethod1" fullname="Component01.Component01Tests01.TestMethod1" methodname="TestMethod1" classname="Component01.Component01Tests01" runstate="Runnable" seed="444750728">
+        <test-case id="1-1001" name="TestMethod1" fullname="Component01.Component01Tests01.TestMethod1" methodname="TestMethod1" classname="Component01.Component01Tests01" runstate="Runnable" seed="1731318865">
           <properties>
             <property name="Description" value="Test ID: Dave-001 - Adding two positive numbers" />
             <property name="Category" value="Regression" />
             <property name="TestID" value="Dave-001" />
           </properties>
         </test-case>
-        <test-case id="1-1002" name="TestMethod2" fullname="Component01.Component01Tests01.TestMethod2" methodname="TestMethod2" classname="Component01.Component01Tests01" runstate="Runnable" seed="756087871">
+        <test-case id="1-1002" name="TestMethod2" fullname="Component01.Component01Tests01.TestMethod2" methodname="TestMethod2" classname="Component01.Component01Tests01" runstate="Runnable" seed="1561996149">
           <properties>
             <property name="Description" value="Test ID is not known" />
             <property name="Category" value="Sanity" />
             <property name="Category" value="Regression" />
           </properties>
         </test-case>
-        <test-case id="1-1003" name="TestMethod3" fullname="Component01.Component01Tests01.TestMethod3" methodname="TestMethod3" classname="Component01.Component01Tests01" runstate="Runnable" seed="566966054" />
-        <test-case id="1-1004" name="TestMethod4" fullname="Component01.Component01Tests01.TestMethod4" methodname="TestMethod4" classname="Component01.Component01Tests01" runstate="Runnable" seed="807763682">
+        <test-case id="1-1003" name="TestMethod3" fullname="Component01.Component01Tests01.TestMethod3" methodname="TestMethod3" classname="Component01.Component01Tests01" runstate="Runnable" seed="1744898617" />
+        <test-case id="1-1004" name="TestMethod4" fullname="Component01.Component01Tests01.TestMethod4" methodname="TestMethod4" classname="Component01.Component01Tests01" runstate="Runnable" seed="568955300">
           <properties>
             <property name="Category" value="Regression" />
             <property name="Category" value="Sanity" />
@@ -41,22 +41,22 @@
           <property name="Description" value="Component01 Test Class 02" />
           <property name="ComponentTest" value="Component-01-TestSuite-02" />
         </properties>
-        <test-case id="1-1006" name="TestMethod21" fullname="Component01.Component01Tests02.TestMethod21" methodname="TestMethod21" classname="Component01.Component01Tests02" runstate="Runnable" seed="404608455">
+        <test-case id="1-1006" name="TestMethod21" fullname="Component01.Component01Tests02.TestMethod21" methodname="TestMethod21" classname="Component01.Component01Tests02" runstate="Runnable" seed="1324517450">
           <properties>
-            <property name="Description" value="Test ID: Dave-001 - Adding two positive numbers" />
+            <property name="Description" value="Test ID: Dave-002 - Adding two positive numbers" />
             <property name="Category" value="Regression" />
             <property name="TestID" value="Dave-002" />
           </properties>
         </test-case>
-        <test-case id="1-1007" name="TestMethod22" fullname="Component01.Component01Tests02.TestMethod22" methodname="TestMethod22" classname="Component01.Component01Tests02" runstate="Runnable" seed="1411495892">
+        <test-case id="1-1007" name="TestMethod22" fullname="Component01.Component01Tests02.TestMethod22" methodname="TestMethod22" classname="Component01.Component01Tests02" runstate="Runnable" seed="398785816">
           <properties>
             <property name="Description" value="Test ID is not known" />
             <property name="Category" value="Sanity" />
             <property name="Category" value="Regression" />
           </properties>
         </test-case>
-        <test-case id="1-1008" name="TestMethod23" fullname="Component01.Component01Tests02.TestMethod23" methodname="TestMethod23" classname="Component01.Component01Tests02" runstate="Runnable" seed="537714781" />
-        <test-case id="1-1009" name="TestMethod24" fullname="Component01.Component01Tests02.TestMethod24" methodname="TestMethod24" classname="Component01.Component01Tests02" runstate="Runnable" seed="1723177273">
+        <test-case id="1-1008" name="TestMethod23" fullname="Component01.Component01Tests02.TestMethod23" methodname="TestMethod23" classname="Component01.Component01Tests02" runstate="Runnable" seed="297197497" />
+        <test-case id="1-1009" name="TestMethod24" fullname="Component01.Component01Tests02.TestMethod24" methodname="TestMethod24" classname="Component01.Component01Tests02" runstate="Runnable" seed="2007688691">
           <properties>
             <property name="Category" value="Regression" />
             <property name="Category" value="Sanity" />
@@ -71,7 +71,7 @@
       <setting name="NumberOfTestWorkers" value="32" />
     </settings>
     <properties>
-      <property name="_PID" value="1358100" />
+      <property name="_PID" value="1445327" />
       <property name="_APPDOMAIN" value="TestRunnerCLI" />
     </properties>
     <test-suite type="TestSuite" id="2-1020" name="Component02" fullname="Component02" runstate="Runnable" testcasecount="5">
@@ -83,21 +83,22 @@
           <properties>
             <property name="Category" value="Sanity" />
             <property name="Category" value="Regression" />
+            <property name="Category" value="Regression" />
           </properties>
-          <test-case id="2-1013" name="TestMethod1(1,1,2)" fullname="Component02.Component02Tests.TestMethod1(1,1,2)" methodname="TestMethod1" classname="Component02.Component02Tests" runstate="Runnable" seed="48344200" />
-          <test-case id="2-1014" name="TestMethod1(1,2,2)" fullname="Component02.Component02Tests.TestMethod1(1,2,2)" methodname="TestMethod1" classname="Component02.Component02Tests" runstate="Runnable" seed="1079783548" />
+          <test-case id="2-1013" name="TestMethod1(1,1,2)" fullname="Component02.Component02Tests.TestMethod1(1,1,2)" methodname="TestMethod1" classname="Component02.Component02Tests" runstate="Runnable" seed="917199220" />
+          <test-case id="2-1014" name="TestMethod1(1,2,2)" fullname="Component02.Component02Tests.TestMethod1(1,2,2)" methodname="TestMethod1" classname="Component02.Component02Tests" runstate="Runnable" seed="1677713744" />
         </test-suite>
-        <test-case id="2-1016" name="TestMethod2" fullname="Component02.Component02Tests.TestMethod2" methodname="TestMethod2" classname="Component02.Component02Tests" runstate="Runnable" seed="1269000915">
+        <test-case id="2-1016" name="TestMethod2" fullname="Component02.Component02Tests.TestMethod2" methodname="TestMethod2" classname="Component02.Component02Tests" runstate="Runnable" seed="1697562469">
           <properties>
             <property name="Category" value="Sanity" />
           </properties>
         </test-case>
-        <test-case id="2-1017" name="TestMethod3" fullname="Component02.Component02Tests.TestMethod3" methodname="TestMethod3" classname="Component02.Component02Tests" runstate="Runnable" seed="932974176">
+        <test-case id="2-1017" name="TestMethod3" fullname="Component02.Component02Tests.TestMethod3" methodname="TestMethod3" classname="Component02.Component02Tests" runstate="Runnable" seed="200105794">
           <properties>
             <property name="Category" value="Regression" />
           </properties>
         </test-case>
-        <test-case id="2-1018" name="TestMethod4" fullname="Component02.Component02Tests.TestMethod4" methodname="TestMethod4" classname="Component02.Component02Tests" runstate="Runnable" seed="1054580396">
+        <test-case id="2-1018" name="TestMethod4" fullname="Component02.Component02Tests.TestMethod4" methodname="TestMethod4" classname="Component02.Component02Tests" runstate="Runnable" seed="881583636">
           <properties>
             <property name="Category" value="Regression" />
           </properties>

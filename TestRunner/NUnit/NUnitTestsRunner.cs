@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using System.Text;
 using global::NUnit.Engine;
 using global::NUnit;
+using TestRunner.Framework;
 
 public class NUnitTestsRunner
 {
@@ -153,7 +154,7 @@ public class NUnitTestsRunner
     private void PrintTests()
     {
         PrintTests("");
-        foreach (var category in TestTypes.All)
+        foreach (var category in TestCategories.All)
         {
             PrintTests(category);
         }
@@ -165,7 +166,7 @@ public class NUnitTestsRunner
 
         if (category == "")
         {
-            category = "All";
+            category = TestCategories.NotSpecified;
         }
 
         Console.WriteLine("Category: {0}", category);
@@ -179,7 +180,7 @@ public class NUnitTestsRunner
     private void PrintTestSuites(NUnitTestSuite testSuite)
     {
 
-        if (testSuite.Type == "TestFixture")
+        if (testSuite.Type == TestFixture.Name)
         {
             Console.WriteLine("\tTestSuite: {0}, Count: {1}", testSuite.Name, testSuite.TestCaseCount);
         }
@@ -191,7 +192,7 @@ public class NUnitTestsRunner
             {
                 var (testCaseId, description, categories) = GetTestCaseProperties(testcase);
                 var categoriesListString = string.Join<string>(",", categories);
-                Console.WriteLine("\t\tTestCase: {0}, Id: {1}, Custom Id: {2}, Test Categories: {3}, Description: {4}", testcase.MethodName, testcase.Id, testCaseId, categories, description);
+                Console.WriteLine("\t\tTestCase: {0}, Id: {1}, Custom Id: {2}, Test Categories: {3}, Description: {4}", testcase.MethodName, testcase.Id, testCaseId, categoriesListString, description);
             }
         }
 
@@ -209,7 +210,7 @@ public class NUnitTestsRunner
         NUnitTestRun tr = this.DeserializeRunResults();
         if (category == "")
         {
-            category = "All";
+            category = TestCategories.NotSpecified;
         }
 
         Console.WriteLine("Category: {5}, Test Result: {0}, Passed: {1}, Failed: {2}, Skipped: {3}, Inconclusive: {4}", tr.Result, tr.Passed, tr.Failed, tr.Skipped, tr.Inconclusive, category);
@@ -226,7 +227,10 @@ public class NUnitTestsRunner
     private void PrintTestSuitesResults(NUnitTestSuite testSuite)
     {
 
-        if (testSuite.Type == "TestFixture")
+        if (testSuite.Type == NUnitTestSuiteTypes.TestFixture)
+        {
+            Console.WriteLine("\tTestSuite: {0}, Result: {1}, Passed: {2}, Failed: {3}, Skipped: {4}, Inconclusive: {5}", testSuite.Name, testSuite.Result, testSuite.Passed, testSuite.Failed, testSuite.Skipped, testSuite.Inconclusive);
+        }
         {
             Console.WriteLine("\tTestSuite: {0}, Result: {1}, Passed: {2}, Failed: {3}, Skipped: {4}, Inconclusive: {5}", testSuite.Name, testSuite.Result, testSuite.Passed, testSuite.Failed, testSuite.Skipped, testSuite.Inconclusive);
         }
@@ -236,8 +240,8 @@ public class NUnitTestsRunner
         {
             foreach (var testcase in testSuite.TestCases)
             {
-                var (testCaseId, description, categories) = GetTestCaseProperties(testcase);
-                var categoriesListString = string.Join<string>(",", categories);
+                var (testCaseId, description, _) = GetTestCaseProperties(testcase);
+                // var categoriesListString = string.Join<string>(",", categories);
                 Console.WriteLine("\t\tTestCase: {0}, Id: {1}, Custom Id: {2}, Description: {3}, Result: {4}", testcase.MethodName, testcase.Id, testCaseId, description, testcase.Result);
             }
         }
@@ -260,7 +264,7 @@ public class NUnitTestsRunner
 
         if (testcase?.Properties?.PropertyList == null)
         {
-            categories.Add("All");
+            categories.Add(TestCategories.NotSpecified);
             return (testCaseId, description, categories);
         }
 
@@ -268,13 +272,13 @@ public class NUnitTestsRunner
         {
             switch (property.Name)
             {
-                case "Description":
+                case TestCaseProperties.Description:
                     description = property.Value;
                     break;
-                case "TestID":
+                case TestCaseProperties.TestID:
                     testCaseId = property.Value;
                     break;
-                case "Category":
+                case TestCaseProperties.Category:
                     categories.Add(property.Value);
                     break;
             }
@@ -297,7 +301,7 @@ public class NUnitTestsRunner
         {
             switch (property.Name)
             {
-                case "ComponentTest":
+                case TestSuiteProperties.ComponentTest:
                     componentTest = property.Value;
                     break;
             }

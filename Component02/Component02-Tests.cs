@@ -1,6 +1,7 @@
 ﻿namespace Component02;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
+using TestRunner.Framework;
 
 public class ClassToTest {
     public async Task<int> AddAsync(int a, int b) {
@@ -10,14 +11,14 @@ public class ClassToTest {
 }
 
 [TestFixture]
-[Property("ComponentTest", "Component-02-TestSuite-01")]
+[Property(TestFixture.Name, "Component-02-TestSuite-01")]
 public class Component02Tests
 {
     // Test method marked for the sanity test suite
     // [Test, Category("Sanity")]
     // Must use Task, can't be async void
-    [TestCase(1, 1, 2), Category("Sanity")]
-    [TestCase(1, 2, 2), Category("Regression")]
+    [TestCase(1, 1, 2), Category(TestCategories.Sanity)]
+    [TestCase(1, 2, 2), Category(TestCategories.Regression), Category(TestCategories.Regression)]
     public async Task TestMethod1(int a, int b, int expectedResult)
     {
         var classToTest = new ClassToTest();
@@ -26,7 +27,7 @@ public class Component02Tests
     }
 
     // Another test method marked for the sanity test suite
-    [Test, Category("Sanity")]
+    [Test, Category(TestCategories.Sanity)]
     public async Task TestMethod2()
     {
         var result = await Task.FromResult(true);
@@ -34,14 +35,14 @@ public class Component02Tests
     }
 
     // Test method marked for the regression test suite
-    [Test, Category("Regression")]
+    [Test, Category(TestCategories.Regression)]
     public void TestMethod3()
     {
         Assert.That(3, Is.EqualTo(3));  // Example assertion
     }
 
     // Another test method marked for both regression and sanity test suites
-    [Test, Category("Regression")]
+    [Test, Category(TestCategories.Regression)]
     public void TestMethod4()
     {
         Assert.That(new object(), !Is.Null);  // Example assertion

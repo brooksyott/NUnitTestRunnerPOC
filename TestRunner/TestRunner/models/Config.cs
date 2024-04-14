@@ -10,14 +10,14 @@ using System.Collections.Generic;
 /// </summary>
 public partial class Config
 {
-    public List<Component> Components { get; set; }
+    public List<TestLibrary> TestLibraries { get; set; }
     public TestSuites TestSuites { get; set; }
 
     public LabConfig LabConfig { get; set; }
 }
 
 
-public partial class Component
+public partial class TestLibrary
 {
     public string Name { get; set; }
 
@@ -37,14 +37,14 @@ public partial class TestSuites
 
 public partial class TestsetConfig
 {
-    public string Component { get; set; }
+    public string TestLibrary { get; set; }
     public List<TestsetComponentConfig> TestSets { get; set; }
 
 }
 
 public partial class TestsetComponentConfig
 {
-    public string Component { get; set; }
+    public string TestLibrary { get; set; }
 
     public string TestSet { get; set; }
 }

@@ -159,9 +159,9 @@ public partial class TestRunnerCLI
 
                 foreach (var testcase in component.Testcases)
                 {
-                    var categoriesListString = string.Join<string>(",", testcase.Categories);
+                    var categoriesListString = string.Join<string>(" & ", testcase.Categories);
 
-                    Console.WriteLine($"Component: {component.Name}, Test Type: {categoriesListString}, ID: {testcase.ID}, Name: {testcase.Name} Title: {testcase.Description}");
+                    Console.WriteLine($"Test Fixture: {component.Name}, Test Type: {categoriesListString}, ID: {testcase.ID}, Name: {testcase.Name} Title: {testcase.Description}");
                 }
             }
 
@@ -184,23 +184,23 @@ public partial class TestRunnerCLI
         }
         var testConfig = GetConfig(configFile);
         var testRunner = _serviceProvider.GetService<TestcaseRunnerService>();
-        if (testConfig?.Components == null)
+        if (testConfig?.TestLibraries == null)
         {
             _logger.LogError("No components found in the config file");
             return (null, null);
         }
 
-        List<Component> componentsList;
+        List<TestLibrary> componentsList;
         if (component == null)
         {
-            componentsList = testConfig.Components;
+            componentsList = testConfig.TestLibraries;
         }
         else
         {
-            componentsList = testConfig.Components.Where(c => c.Name == component).ToList();
+            componentsList = testConfig.TestLibraries.Where(c => c.Name == component).ToList();
         }
 
-        testConfig.Components.Where(c => c.Name == component).ToList();
+        testConfig.TestLibraries.Where(c => c.Name == component).ToList();
         testRunner.Load(componentsList);
 
         return (testRunner, testConfig);

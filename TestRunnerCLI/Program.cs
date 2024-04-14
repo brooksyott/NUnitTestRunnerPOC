@@ -5,6 +5,7 @@ using System.CommandLine;
 
 using TestRunner.NUnit;
 using TestRunner;
+using TestRunner.Framework;
 
 public class Program
 {
@@ -28,7 +29,7 @@ public class Program
         // Boolean success = await runner.ExecuteAsync(TestTypes.Sanity);
         // Boolean success = runner.Execute(TestTypes.Regresssion);
         // Boolean success = await runner.ExecuteAsync("", new TestRunEventListener());
-        Boolean success = await runner.ExecuteAsync(TestTypes.Sanity);
+        Boolean success = await runner.ExecuteAsync(TestCategories.Sanity);
         if (success)
         {
             runner.TestResultsXML.Save("testResults.xml");
