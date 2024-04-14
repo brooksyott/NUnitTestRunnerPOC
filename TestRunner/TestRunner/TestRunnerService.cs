@@ -27,9 +27,9 @@ public partial class TestcaseRunnerService
         _runner.Load(assemblyPaths);
     }
 
-    public GetComponentsResponse GetComponentsDetails(bool withTestcases)
+    public GetTestLibrariesResponse GetTestLibraryDetails(bool withTestcases)
     {
-        GetComponentsResponse response = new GetComponentsResponse();
+        GetTestLibrariesResponse response = new GetTestLibrariesResponse();
 
         NUnitTestRun testRun = _runner.DeserializeRun();
 
@@ -39,7 +39,7 @@ public partial class TestcaseRunnerService
             FindTestFixture(testSuite, ref testFixtures);
             foreach (var testFixture in testFixtures)
             {
-                ComponentDetails componentDetails = new ComponentDetails();
+                TestLibraryDetails componentDetails = new TestLibraryDetails();
                 MapTestSuites(testFixture, ref response, ref componentDetails);
                 response.Components.Add(componentDetails);
             }
@@ -64,7 +64,7 @@ public partial class TestcaseRunnerService
     }
 
 
-    private void MapTestSuites(NUnitTestSuite testSuite, ref GetComponentsResponse response, ref ComponentDetails componentDetails)
+    private void MapTestSuites(NUnitTestSuite testSuite, ref GetTestLibrariesResponse response, ref TestLibraryDetails componentDetails)
     {
         if (testSuite.Type == "TestFixture")
         {

@@ -2,12 +2,12 @@ namespace TestRunner;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-public class GetComponentsResponse
+public class GetTestLibrariesResponse
 {
-    public List<ComponentDetails> Components { get; set; } = new List<ComponentDetails>();
+    public List<TestLibraryDetails> Components { get; set; } = new List<TestLibraryDetails>();
 }
 
-public class ComponentDetails
+public class TestLibraryDetails
 {
     public string Name { get; set; }
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

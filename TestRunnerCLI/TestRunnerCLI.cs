@@ -115,7 +115,7 @@ public partial class TestRunnerCLI
         var getCommand = new Command("get", "Get available components");
         getCommand.AddOption(showTestCasesOption);
 
-        AddGetComponentsCommand(ref getCommand, configFileOption, logLevelOption);
+        AddGetTestLibrariesCommand(ref getCommand, configFileOption, logLevelOption);
         // AddGetTestsetsCommand(ref getCommand);
         // AddGetTestSuitesCommand(ref getCommand, configFileOption, logLevelOption);
 
@@ -130,9 +130,9 @@ public partial class TestRunnerCLI
     /// <param name="parentCommand"></param>
     /// <param name="verboseOption"></param>
     /// <param name="configFileOption"></param>
-    private void AddGetComponentsCommand(ref Command parentCommand, Option<string> configFileOption, Option<string> logLevelOption)
+    private void AddGetTestLibrariesCommand(ref Command parentCommand, Option<string> configFileOption, Option<string> logLevelOption)
     {
-        var componentsCommand = new Command("components", "Get available components");
+        var componentsCommand = new Command("testLibraries", "Get available Test Libraries");
         var showTestCasesOption = new Option<bool>("--show-testcases", FalseDefault, "Show test cases");
         showTestCasesOption.AddAlias("-s");
         componentsCommand.AddOption(showTestCasesOption);
@@ -148,7 +148,7 @@ public partial class TestRunnerCLI
                 return;
             }
 
-            var componentsResponse = testRunner.GetComponentsDetails(verbose);
+            var componentsResponse = testRunner.GetTestLibraryDetails(verbose);
             foreach (var component in componentsResponse.Components)
             {
                 if (!verbose)

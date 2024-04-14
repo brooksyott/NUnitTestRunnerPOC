@@ -11,7 +11,22 @@
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/TestRunnerCLI/bin/Debug/net8.0/TestRunnerCLI.dll",
-            "args": ["get", "components", "-s", "-c", "config.yaml"],
+            // "args": [
+            //     "get",
+            //     "testLibraries",
+            //     "-s",
+            //     "-c",
+            //     "config.yaml"
+            // ],
+            "args": [
+                "get",
+                "testLibraries",
+                "--help",
+                // "-l",
+                // "debug",
+                "-c",
+                "config.yaml"
+            ],
             "cwd": "${workspaceFolder}/TestRunnerCLI",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
