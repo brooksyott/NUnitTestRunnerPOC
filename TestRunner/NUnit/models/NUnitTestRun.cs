@@ -1,15 +1,16 @@
-namespace TestRunner;
+namespace TestRunner.NUnit;
 using System.Xml.Serialization;
 
 
-[XmlRoot("test-run-root")]
-public class TestRunRoot
-{
-    [XmlElement("test-run")]
-    public TestRun TestRun { get; set; }
-}
+// [XmlRoot("test-run-root")]
+// public class TestRunRoot
+// {
+//     [XmlElement("test-run")]
+//     public TestRun TestRun { get; set; }
+// }
 
-public class TestRun
+[XmlRoot("test-run")]
+public class NUnitTestRun
 {
     [XmlAttribute("id")]
     public int Id { get; set; }
@@ -63,5 +64,5 @@ public class TestRun
     public string CommandLine { get; set; }
 
     [XmlElement("test-suite")]
-    public List<TestSuite> TestSuites { get; set; }
+    public List<NUnitTestSuite> TestSuites { get; set; }
 }

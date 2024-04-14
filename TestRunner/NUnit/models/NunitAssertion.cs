@@ -1,13 +1,13 @@
-namespace TestRunner;
+namespace TestRunner.NUnit;
 using System.Xml.Serialization;
 
-public class Assertions
+public class NUnitAssertions
 {
     [XmlElement("assertion")]
-    public List<Assertion> AssertionList { get; set; }
+    public List<NUnitAssertion> AssertionList { get; set; }
 }
 
-public class Assertion
+public class NUnitAssertion
 {
     [XmlAttribute("result")]
     public string Result { get; set; }

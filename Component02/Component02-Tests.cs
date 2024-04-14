@@ -1,4 +1,4 @@
-﻿namespace Component01;
+﻿namespace Component02;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
@@ -10,6 +10,7 @@ public class ClassToTest {
 }
 
 [TestFixture]
+[Property("ComponentTest", "Component-02-TestSuite-01")]
 public class Component02Tests
 {
     // Test method marked for the sanity test suite

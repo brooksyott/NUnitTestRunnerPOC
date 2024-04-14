@@ -1,10 +1,13 @@
-﻿namespace Component01;
+namespace Component01;
+
+using System.Reflection.Metadata.Ecma335;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
 
-[TestFixture]
-public class Component01Tests
+[TestFixture(Description = "Component01 Test Class 01")]
+[Property("ComponentTest", "Component-01-TestSuite-01")]
+public class Component01Tests01
 {
     // Test method marked for the sanity test suite
     // [Test, Category("Sanity")]
@@ -26,7 +29,8 @@ public class Component01Tests
     }
 
     // Test method marked for the regression test suite
-    [Test, Category("Regression")]
+    // [Test, Category("Regression")]
+    [Test]
     public void TestMethod3()
     {
         Assert.That(3, Is.EqualTo(3));  // Example assertion

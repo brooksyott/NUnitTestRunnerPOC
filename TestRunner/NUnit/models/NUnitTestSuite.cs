@@ -1,7 +1,7 @@
-namespace TestRunner;
+namespace TestRunner.NUnit;
 using System.Xml.Serialization;
 
-public class TestSuite
+public class NUnitTestSuite
 {
     [XmlAttribute("type")]
     public string Type { get; set; }
@@ -55,20 +55,20 @@ public class TestSuite
     public int Asserts { get; set; }
 
     [XmlElement("environment")]
-    public Environment Environment { get; set; }
+    public NUnitEnvironment Environment { get; set; }
 
     [XmlElement("settings")]
-    public Settings Settings { get; set; }
+    public NUnitSettings Settings { get; set; }
 
     [XmlElement("properties")]
-    public Properties Properties { get; set; }
+    public NUnitProperties Properties { get; set; }
 
     [XmlElement("failure")]
-    public Failure Failure { get; set; }
+    public NUnitFailure Failure { get; set; }
 
     [XmlElement("test-suite")]
-    public List<TestSuite> ChildSuites { get; set; }
+    public List<NUnitTestSuite> ChildSuites { get; set; }
 
     [XmlElement("test-case")]
-    public List<TestCase> TestCases { get; set; }
+    public List<NUnitTestCase> TestCases { get; set; }
 }

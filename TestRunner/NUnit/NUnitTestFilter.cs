@@ -1,20 +1,20 @@
-namespace TestRunner;
+namespace TestRunner.NUnit;
 
 using System.Xml.Serialization;
-using NUnit.Engine;
+using global::NUnit.Engine;
 
 
 [Serializable, XmlRoot("filter")]
-public class FilterBuilder
+public class NUnitFilterBuilder
 {
     [XmlElement("cat")]
     public string Category { get; set; }
 
-    public FilterBuilder()
+    public NUnitFilterBuilder()
     {
     }
 
-    public FilterBuilder(string category)
+    public NUnitFilterBuilder(string category)
     {
         Category = category;
     }
@@ -25,9 +25,9 @@ public class FilterBuilder
         {
             return TestFilter.Empty;
         }
-        
+
         string xml = "";
-        var serializer = new XmlSerializer(typeof(FilterBuilder));
+        var serializer = new XmlSerializer(typeof(NUnitFilterBuilder));
         using (var writer = new StringWriter())
         {
             serializer.Serialize(writer, this);

@@ -1,7 +1,7 @@
-namespace TestRunner;
+namespace TestRunner.NUnit;
 using System.Xml.Serialization;
 
-public class TestCase
+public class NUnitTestCase
 {
     [XmlAttribute("id")]
     public string Id { get; set; }
@@ -40,14 +40,14 @@ public class TestCase
     public int Asserts { get; set; }
 
     [XmlElement("properties")]
-    public Properties Properties { get; set; }
+    public NUnitProperties Properties { get; set; }
 
     [XmlElement("output")]
     public string Output { get; set; }
 
     [XmlElement("failure")]
-    public Failure Failure { get; set; }
+    public NUnitFailure Failure { get; set; }
 
     [XmlElement("assertions")]
-    public Assertions Assertions { get; set; }
+    public NUnitAssertions Assertions { get; set; }
 }

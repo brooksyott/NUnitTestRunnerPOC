@@ -1,7 +1,7 @@
-namespace TestRunner;
+namespace TestRunner.NUnit;
 using System.Xml.Serialization;
 
-public class Environment
+public class NUnitEnvironment
 {
     [XmlAttribute("framework-version")]
     public string FrameworkVersion { get; set; }

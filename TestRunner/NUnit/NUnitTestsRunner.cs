@@ -1,11 +1,11 @@
-namespace TestRunner;
+namespace TestRunner.NUnit;
 
 using System.Xml;
 using System.Reflection;
 using System.Xml.Serialization;
 using System.Text;
-using NUnit;
-using NUnit.Engine;
+using global::NUnit.Engine;
+using global::NUnit;
 
 public class NUnitTestsRunner
 {
@@ -16,7 +16,6 @@ public class NUnitTestsRunner
     public XmlDocument TestResultsXML { get; private set; }
     public XmlNode TestsXML { get; private set; }
 
-    public TestRunRoot TestResults;
 
     public NUnitTestsRunner()
     {
@@ -55,14 +54,14 @@ public class NUnitTestsRunner
         return true;
     }
 
-    public TestRunRoot DeserializeRunResults()
+    public NUnitTestRun DeserializeRunResults()
     {
         try
         {
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(TestResultsXML.OuterXml)))
             {
-                XmlSerializer xs = new XmlSerializer(typeof(TestRunRoot), new XmlRootAttribute("test-run-root"));
-                return (TestRunRoot)xs.Deserialize(stream);
+                XmlSerializer xs = new XmlSerializer(typeof(NUnitTestRun), new XmlRootAttribute("test-run"));
+                return (NUnitTestRun)xs.Deserialize(stream);
             }
         }
         catch (Exception e)
@@ -76,19 +75,22 @@ public class NUnitTestsRunner
     public async Task<Boolean> ExecuteAsync(string category = "", ITestEventListener eventListener = null)
     {
         // Initialize the master document root element
-        TestResultsXML = new XmlDocument();
-        XmlNode masterNode = TestResultsXML.CreateElement("test-run-root");
-        TestResultsXML.AppendChild(masterNode);
+        // TestResultsXML = new XmlDocument();
+        // XmlNode masterNode = TestResultsXML.CreateElement("test-run-root");
+        // TestResultsXML.AppendChild(masterNode);
 
         // Build the filter
-        FilterBuilder filterBuilder = new FilterBuilder(category);
+        NUnitFilterBuilder filterBuilder = new NUnitFilterBuilder(category);
         Filter = filterBuilder.Build();
 
         var testrun = await Task<ITestRun>.Factory.StartNew(() => Runner.RunAsync(eventListener, Filter));
         var waitResult = testrun.Wait(10000000);
         var result = testrun.Result;
-        XmlNode importedNode = TestResultsXML.ImportNode(result, true);
-        masterNode.AppendChild(importedNode);
+        // XmlNode importedNode = TestResultsXML.ImportNode(result, true);
+        // masterNode.AppendChild(importedNode);
+        TestResultsXML = new XmlDocument();
+        TestResultsXML.LoadXml(result.OuterXml);
+        // TestResultsXML.Save("testResults.xml");
 
         PrintResults(category, true);
 
@@ -98,17 +100,22 @@ public class NUnitTestsRunner
     public Boolean Execute(string category = "", ITestEventListener eventListener = null)
     {
         // Initialize the master document root element
-        TestResultsXML = new XmlDocument();
-        XmlNode masterNode = TestResultsXML.CreateElement("test-run-root");
-        TestResultsXML.AppendChild(masterNode);
+        // TestResultsXML = new XmlDocument();
+        // XmlNode masterNode = TestResultsXML.CreateElement("test-run-root");
+        // TestResultsXML.AppendChild(masterNode);
 
         // Build the filter
-        FilterBuilder filterBuilder = new FilterBuilder(category);
+        NUnitFilterBuilder filterBuilder = new NUnitFilterBuilder(category);
         Filter = filterBuilder.Build();
 
         XmlNode result = Runner.Run(eventListener, Filter);
-        XmlNode importedNode = TestResultsXML.ImportNode(result, true);
-        masterNode.AppendChild(importedNode);
+        // XmlNode importedNode = TestResultsXML.ImportNode(result, true);
+        // masterNode.AppendChild(importedNode);
+
+        TestResultsXML = new XmlDocument();
+        TestResultsXML.LoadXml(result.OuterXml);
+        // TestResultsXML.Save("testResults.xml");
+
 
         PrintResults(category, true);
 
@@ -116,20 +123,24 @@ public class NUnitTestsRunner
     }
 
 
-    public TestRun DeserializeRun(string category = "")
+    public NUnitTestRun DeserializeRun(string category = "")
     {
-        FilterBuilder filterBuilder = new FilterBuilder(category);
+        NUnitFilterBuilder filterBuilder = new NUnitFilterBuilder(category);
         Filter = filterBuilder.Build();
 
         TestsXML = Runner.Explore(Filter);
+        var xmlDoc = new XmlDocument();
+        xmlDoc.LoadXml(TestsXML.OuterXml);
+        xmlDoc.Save("deserializeRun.xml");
+
         // Console.WriteLine(TestsXML.OuterXml);
 
         try
         {
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(TestsXML.OuterXml)))
             {
-                XmlSerializer xs = new XmlSerializer(typeof(TestRun), new XmlRootAttribute("test-run"));
-                return (TestRun)xs.Deserialize(stream);
+                XmlSerializer xs = new XmlSerializer(typeof(NUnitTestRun), new XmlRootAttribute("test-run"));
+                return (NUnitTestRun)xs.Deserialize(stream);
             }
         }
         catch (Exception e)
@@ -150,22 +161,22 @@ public class NUnitTestsRunner
 
     private void PrintTests(string category)
     {
-        TestRun testRun = DeserializeRun(category);
+        NUnitTestRun testRun = DeserializeRun(category);
 
         if (category == "")
         {
             category = "All";
         }
-        
+
         Console.WriteLine("Category: {0}", category);
 
-        foreach (TestSuite testSuite in testRun.TestSuites)
+        foreach (NUnitTestSuite testSuite in testRun.TestSuites)
         {
             PrintTestSuites(testSuite);
         }
     }
 
-    private void PrintTestSuites(TestSuite testSuite)
+    private void PrintTestSuites(NUnitTestSuite testSuite)
     {
 
         if (testSuite.Type == "TestFixture")
@@ -178,8 +189,9 @@ public class NUnitTestsRunner
         {
             foreach (var testcase in testSuite.TestCases)
             {
-                var (testCaseId, description) = GetTestCaseInformation(testcase);
-                Console.WriteLine("\t\tTestCase: {0}, Id: {1}, Custom Id: {2}, Description: {3}", testcase.MethodName, testcase.Id, testCaseId, description);
+                var (testCaseId, description, categories) = GetTestCaseProperties(testcase);
+                var categoriesListString = string.Join<string>(",", categories);
+                Console.WriteLine("\t\tTestCase: {0}, Id: {1}, Custom Id: {2}, Test Categories: {3}, Description: {4}", testcase.MethodName, testcase.Id, testCaseId, categories, description);
             }
         }
 
@@ -194,24 +206,24 @@ public class NUnitTestsRunner
 
     private void PrintResults(string category = "", Boolean detailed = false)
     {
-        TestRunRoot tr = this.DeserializeRunResults();
+        NUnitTestRun tr = this.DeserializeRunResults();
         if (category == "")
         {
             category = "All";
         }
 
-        Console.WriteLine("Category: {5}, Test Result: {0}, Passed: {1}, Failed: {2}, Skipped: {3}, Inconclusive: {4}", tr.TestRun.Result, tr.TestRun.Passed, tr.TestRun.Failed, tr.TestRun.Skipped, tr.TestRun.Inconclusive, category);
+        Console.WriteLine("Category: {5}, Test Result: {0}, Passed: {1}, Failed: {2}, Skipped: {3}, Inconclusive: {4}", tr.Result, tr.Passed, tr.Failed, tr.Skipped, tr.Inconclusive, category);
 
         if (detailed)
         {
-            foreach (var testSuite in tr.TestRun.TestSuites)
+            foreach (var testSuite in tr.TestSuites)
             {
                 PrintTestSuitesResults(testSuite);
             }
         }
     }
 
-    private void PrintTestSuitesResults(TestSuite testSuite)
+    private void PrintTestSuitesResults(NUnitTestSuite testSuite)
     {
 
         if (testSuite.Type == "TestFixture")
@@ -224,8 +236,9 @@ public class NUnitTestsRunner
         {
             foreach (var testcase in testSuite.TestCases)
             {
-                var (testCaseId, description) = GetTestCaseInformation(testcase);
-                Console.WriteLine("\t\tTestCase: {0}, Id: {1}, Custom Id: {2}, Description: {3},  Result: {4}", testcase.MethodName, testcase.Id, testCaseId, description, testcase.Result);
+                var (testCaseId, description, categories) = GetTestCaseProperties(testcase);
+                var categoriesListString = string.Join<string>(",", categories);
+                Console.WriteLine("\t\tTestCase: {0}, Id: {1}, Custom Id: {2}, Description: {3}, Result: {4}", testcase.MethodName, testcase.Id, testCaseId, description, testcase.Result);
             }
         }
 
@@ -239,14 +252,16 @@ public class NUnitTestsRunner
     }
 
 
-    private (string, string) GetTestCaseInformation(TestCase testcase)
+    public (string, string, List<String>) GetTestCaseProperties(NUnitTestCase testcase)
     {
         string description = "";
         string testCaseId = "";
+        List<String> categories = new List<string>();
 
         if (testcase?.Properties?.PropertyList == null)
         {
-            return (testCaseId, description);
+            categories.Add("All");
+            return (testCaseId, description, categories);
         }
 
         foreach (var property in testcase.Properties.PropertyList)
@@ -259,12 +274,39 @@ public class NUnitTestsRunner
                 case "TestID":
                     testCaseId = property.Value;
                     break;
+                case "Category":
+                    categories.Add(property.Value);
+                    break;
             }
         }
 
 
-        return (testCaseId, description);
+        return (testCaseId, description, categories);
     }
+
+    public string GetTestSuiteProperties(NUnitTestSuite testSuite)
+    {
+        string componentTest = "";
+
+        if (testSuite?.Properties?.PropertyList == null)
+        {
+            return componentTest;
+        }
+
+        foreach (var property in testSuite.Properties.PropertyList)
+        {
+            switch (property.Name)
+            {
+                case "ComponentTest":
+                    componentTest = property.Value;
+                    break;
+            }
+        }
+
+
+        return componentTest;
+    }
+
 
 
     public void SaveResults(XmlDocument document, string filePath)
