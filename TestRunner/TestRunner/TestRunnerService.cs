@@ -35,13 +35,34 @@ public partial class TestcaseRunnerService
 
         foreach (NUnitTestSuite testSuite in testRun.TestSuites)
         {
-            ComponentDetails componentDetails = new ComponentDetails();
-            MapTestSuites(testSuite, ref response, ref componentDetails);
-            response.Components.Add(componentDetails);
+            List<NUnitTestSuite> testFixtures = new List<NUnitTestSuite>();
+            FindTestFixture(testSuite, ref testFixtures);
+            foreach (var testFixture in testFixtures)
+            {
+                ComponentDetails componentDetails = new ComponentDetails();
+                MapTestSuites(testFixture, ref response, ref componentDetails);
+                response.Components.Add(componentDetails);
+            }
         }
 
         return response;
     }
+
+    private NUnitTestSuite FindTestFixture(NUnitTestSuite testSuite, ref List<NUnitTestSuite> testFixtures)
+    {
+        if (testSuite.Type == "TestFixture")
+        {
+            testFixtures.Add(testSuite);
+        }
+
+        foreach (var suite in testSuite.ChildSuites)
+        {
+            FindTestFixture(suite, ref testFixtures);
+        }
+
+        return null;
+    }
+
 
     private void MapTestSuites(NUnitTestSuite testSuite, ref GetComponentsResponse response, ref ComponentDetails componentDetails)
     {
